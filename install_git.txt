@@ -1,0 +1,18 @@
+sudo su
+yum update -y
+yum install git -y
+which git ##verify the git installed or not
+git --version    ##to verify the git version
+git config --global user.name "username"  ##to configuring the username
+git config --global user.email "mention mailid" ## to configure mail id
+git config --list #get the configuration list
+git remote add origin repository url  # to add the repository url
+git remote -v ##display the repositories list
+git init ## it will create the git enviroment in that directory
+git add . #add the files and directories created newly
+git commit -m "msg" -a ##commit the all the messages in files
+git push origin master ##push the code to master branch which default
+git status  ###status of the commit
+git log ## commit information
+  
+
