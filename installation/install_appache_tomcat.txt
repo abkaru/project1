@@ -1,0 +1,48 @@
+Installing appache tomcat
+https://acloudxpert.com/install-tomcat-on-amazon-linux/
+#first need to install java on the server
+
+sudo yum install java-1.8.0-openjdk.x86_64 -y
+# create tomcat directory
+cd /opt
+wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.35/bin/apache-tomcat-8.5.35.tar.gz
+tar -xvzf /opt/apache-tomcat-8.5.35.tar.gz
+#giving the execute permission for stop and start the script
+chmod +x /opt/apache-tomcat-8.5.35/bin/startup.sh shutdown.sh
+#Create link files for tomcat startup.sh and shutdown.sh
+ln -s /opt/apache-tomcat-8.5.35/bin/startup.sh /usr/local/bin/tomcatup
+ln -s /opt/apache-tomcat-8.5.35/bin/shutdown.sh /usr/local/bin/tomcatdown
+#if you want to stop the tomcat 
+/usr/local/bin/tomcatdown
+#if you want to start the tomcat  
+/usr/local/bin/tomcatup
+
+#http://<Public_IP>:8080
+cd /opt/apache-tomcat-8.5.35/conf
+# update port number in the "connecter port" field in server.xml
+# restart tomcat after configuration update
+/usr/local/bin/tomcatdown
+/usr/local/bin/tomcatup
+
+[root@ip-172-31-5-163 ~]# vi /opt/apache-tomcat-8.5.35/webapps/host-manager/META-INF/context.xml
+
+#comment the line <!--- and ends with -->
+<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+same as below file also
+
+[root@ip-172-31-5-163 ~]# vi /opt/apache-tomcat-8.5.35/webapps/manager/META-INF/context.xml
+
+#to add the user name in tomcat in the below file..
+
+[root@ip-172-31-37-208 ec2-user]# cd /opt/apache-tomcat-8.5.35/conf
+[root@ip-172-31-37-208 conf]# vi tomcat-users.xml
+
+<role rolename="admin-gui"/>
+  <role rolename="manager-gui"/>
+  <user username="admin" password="admin" roles="admin-gui"/>
+  <user username="raju" password="raju" roles="manager-gui"/>
+
+
+</tomcat-users>
+
